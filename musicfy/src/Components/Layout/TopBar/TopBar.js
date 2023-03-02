@@ -1,11 +1,12 @@
 import React from "react";
 import { Icon, Image } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./TopBar.scss";
 
 export function TopBar() {
+  const navigation = useNavigate();
   const goBack = () => {
-    console.log("Go back");
+    navigation(-1);
   };
   return (
     <div className="top-bar">
