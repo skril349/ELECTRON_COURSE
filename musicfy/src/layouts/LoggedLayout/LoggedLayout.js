@@ -2,7 +2,7 @@ import React from "react";
 import "./LoggedLayout.scss";
 import { LeftMenu } from "../../Components/Layout/LeftMenu";
 import { TopBar } from "../../Components/Layout/TopBar/TopBar";
-
+import { Footer } from "../../Components/Layout/Footer";
 export function LoggedLayout(props) {
   const { children } = props;
   return (
@@ -19,7 +19,7 @@ export function LoggedLayout(props) {
         </div>
       </div>
       <div className="logged-layout__footer">
-        <p>footer</p>
+        <Footer />
       </div>
     </div>
   );
