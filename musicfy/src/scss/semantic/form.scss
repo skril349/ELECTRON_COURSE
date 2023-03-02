@@ -20,6 +20,13 @@
             }
         }
 
+        .ui.button.primary{
+            background-color: $primary-color;
+            color: $font-light;
+            border-radius: 100px;
+
+        }
+
     }
     .field.error{
         .ui.input{
