@@ -9,7 +9,7 @@ export function RegisterForm(props) {
     <div className='register-form'>
       <h1>Empieza a escuchar con una cuenta de Musicfy gratis</h1>
       <Form>
-        <Form.Input placeholder="Correo electrónico" icon="mail outline" type="text" error={true} />
+        <Form.Input placeholder="Correo electrónico" icon="mail outline" type="text" />
         <Form.Input placeholder="Contraseña" icon={<Icon name='eye' link onClick={()=>console.log("show password")} />} type="password" />
         <Form.Input placeholder="Como deberiamos llamarte?" icon="user circle outline" type="text" />
         <Form.Button  primary fluid type="submit">Continuar</Form.Button>
