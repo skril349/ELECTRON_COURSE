@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import "./Auth.scss"
-import { Button } from 'semantic-ui-react'
+import { Image } from 'semantic-ui-react'
 import {AuthOptions, RegisterForm, LoginForm} from "../../Components"
-
+import { logoNameWhite } from '../../assets'
 export function Auth() {
 
   const [typeForm, setTypeForm] = useState(null);
@@ -23,8 +23,11 @@ export function Auth() {
     return <AuthOptions openLogin={openLogin} openRegister={openRegister} />
   }
   return (
-    <div>
-          {renderForm()}
+    <div className='auth'>
+          <div className='auth__content'>
+            <Image src={logoNameWhite} alt="Musicfy" className='auth__content-logo' />
+            {renderForm()}
+          </div>
     </div>
   )
 }
