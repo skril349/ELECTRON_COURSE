@@ -1,6 +1,7 @@
 import React from "react";
 import "./Footer.scss";
 import { Image, Input, Icon } from "semantic-ui-react";
+import { Player } from "../../Shared/Player";
 
 export function Footer() {
   return (
@@ -10,7 +11,7 @@ export function Footer() {
         <p>song name</p>
       </div>
       <div className="footer__center">
-        <p style={{ textAlign: "center" }}>PLAYER</p>
+        <Player />
       </div>
       <div className="footer__right">
         <Input
