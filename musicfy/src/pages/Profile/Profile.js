@@ -6,6 +6,7 @@ import {
   DisplayNameUpdateForm,
   AvatarUpdate,
   EmailUpdateForm,
+  PasswordUpdateForm,
 } from "../../Components/Profile";
 import { BasicModal } from "../../Components";
 
@@ -36,7 +37,7 @@ export function Profile() {
 
     if (type === "password") {
       setTitleModal("Actualizar contraseña");
-      setContentModal(<h1>Form password</h1>);
+      setContentModal(<PasswordUpdateForm onClose={onCloseModal} />);
     }
 
     setShowModal(true);
