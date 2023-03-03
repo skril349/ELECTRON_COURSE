@@ -15,4 +15,15 @@ export class User {
       throw error;
     }
   }
+
+  async updateDisplayName(displayName) {
+    try {
+      const auth = getAuth();
+      await updateProfile(auth.currentUser, {
+        displayName,
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
 }

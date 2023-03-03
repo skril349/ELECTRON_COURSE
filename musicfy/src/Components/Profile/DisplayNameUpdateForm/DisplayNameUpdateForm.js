@@ -8,7 +8,7 @@ import { async } from "@firebase/util";
 const userController = new User();
 
 export function DisplayNameUpdateForm(props) {
-  const { onCloseModal } = props;
+  const { onClose } = props;
 
   const { displayName } = userController.getMe();
 
@@ -18,6 +18,12 @@ export function DisplayNameUpdateForm(props) {
     validationOnChange: false,
     onSubmit: async (formValue) => {
       console.log(formValue);
+      try {
+        await userController.updateDisplayName(formValue.displayName);
+        onClose();
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
