@@ -2,6 +2,7 @@ import React from "react";
 import "./Profile.scss";
 import { Button } from "semantic-ui-react";
 import { User } from "../../api";
+import { AvatarUpdate } from "../../Components/Profile/AvatarUpdate/AvatarUpdate";
 
 const userController = new User();
 
@@ -12,7 +13,7 @@ export function Profile() {
       <h1>Configuración</h1>
       <div className="profile__block">
         <div>
-          <p>avatar</p>
+          <AvatarUpdate />
           <span>{displayName}</span>
         </div>
         <Button onClick={() => console.log("cambiar displayName")}>
