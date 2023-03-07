@@ -4,15 +4,22 @@ import { Form, Image } from "semantic-ui-react";
 import { useDropzone } from "react-dropzone";
 import { noImage } from "../../assets";
 import { useFormik } from "formik";
+import { v4 as uuidv4 } from "uuid";
 import classNames from "classnames";
 import { initialValues, validationSchema } from "./NewArtistForm.data";
+import { Storage, Artist } from "../../api";
+
+const storageController = new Storage();
+const artistController = new Artist();
 
 export function NewArtistForm(props) {
   const { onClose } = props;
   const [image, setImage] = useState(null);
 
   const onDrop = useCallback(async (acceptedFile) => {
-    console.log(acceptedFile);
+    const file = acceptedFile[0];
+    setImage(URL.createObjectURL(file));
+    formik.setFieldValue("file", file);
   });
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
@@ -22,7 +29,21 @@ export function NewArtistForm(props) {
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
-      console.log(formValue);
+      try {
+        const { file, name } = formValue;
+        const response = await storageController.uploadFile(
+          file,
+          "artist",
+          uuidv4()
+        );
+        const url = await storageController.getUrlFile(
+          response.metadata.fullPath
+        );
+        await artistController.create(url, name);
+        onClose();
+      } catch (error) {
+        throw error;
+      }
     },
   });
 

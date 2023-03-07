@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDbA-0Kke0tVM3DntYNdqQRSTubxTeyd-4",
@@ -6,7 +7,9 @@ const firebaseConfig = {
   projectId: "musicfy-e38ad",
   storageBucket: "musicfy-e38ad.appspot.com",
   messagingSenderId: "873775707601",
-  appId: "1:873775707601:web:5af442871eb500524d5cf0"
+  appId: "1:873775707601:web:5af442871eb500524d5cf0",
 };
 
-export const initFirebase = initializeApp(firebaseConfig)
+export const initFirebase = initializeApp(firebaseConfig);
+
+export const db = getFirestore(initFirebase);
