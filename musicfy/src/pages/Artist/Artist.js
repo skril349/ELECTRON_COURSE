@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Artist as ArtistController } from "../../api";
 import { useParams } from "react-router-dom";
+import "./Artist.scss";
+import { ArtistBanner } from "../../Components/Artist";
 
 const artistController = new ArtistController();
 
@@ -19,9 +21,18 @@ export function Artist() {
   }, [id]);
 
   const [artist, setArtist] = useState(null);
+
+  if (!artist) return null;
+
   return (
-    <div>
-      <h1>Artist Screen</h1>
+    <div className="artist-page">
+      <ArtistBanner image={artist.image} name={artist.name} />
+      <div className="artist-page__slider">
+        <h2>Albumes</h2>
+      </div>
+      <div className="artist-page__slider">
+        <h2>canciones</h2>
+      </div>
     </div>
   );
 }
