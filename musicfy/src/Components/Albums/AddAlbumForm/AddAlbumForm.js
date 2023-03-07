@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Form, Image } from "semantic-ui-react";
 import "./AddAlbumForm.scss";
 import classNames from "classnames";
@@ -6,9 +6,30 @@ import { useFormik } from "formik";
 import { initialValues, validationSchema } from "./AddAlbumForm.data";
 import { useDropzone } from "react-dropzone";
 import { noImage } from "../../../assets";
+import { Artist } from "../../../api";
+import { map } from "lodash";
+
+const artistController = new Artist();
 
 export function AddAlbumForm(props) {
   const { onClose } = props;
+  const [artistsOptions, setArtistsOptions] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await artistController.obtainAll();
+        const newData = map(response, (artist) => ({
+          key: artist.id,
+          value: artist.id,
+          text: artist.name,
+        }));
+        setArtistsOptions(newData);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   const [image, setImage] = useState(noImage);
   const onDrop = useCallback(async (acceptedFile) => {
@@ -53,7 +74,10 @@ export function AddAlbumForm(props) {
             fluid
             search
             selection
-            options={[]}
+            options={artistsOptions}
+            value={formik.values.artist}
+            onChange={(_, data) => formik.setFieldValue("artist", data.value)}
+            error={formik.errors.artist}
           />
         </div>
       </div>
