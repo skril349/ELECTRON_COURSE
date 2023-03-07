@@ -1,6 +1,7 @@
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, collection, getDocs } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "../utils";
+import { map } from "lodash";
 
 export class Artist {
   collectionName = "artist";
@@ -12,6 +13,16 @@ export class Artist {
       const data = { id: idArtist, image, name, created_at };
       const docRef = doc(db, this.collectionName, idArtist);
       await setDoc(docRef, data);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async obtainAll() {
+    try {
+      const collectionRef = collection(db, this.collectionName);
+      const snapshot = await getDocs(collectionRef);
+      return map(snapshot.docs, (doc) => doc.data());
     } catch (error) {
       throw error;
     }
