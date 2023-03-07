@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Artist } from "../../api";
+import "./Artists.scss";
+import { ListArtist } from "../../Components/Artist";
 
 const artistController = new Artist();
 
@@ -17,8 +19,9 @@ export function Artists() {
     })();
   }, []);
   return (
-    <div>
-      <h1>Artists screen</h1>
+    <div className="artists-page">
+      <h1>Artistas</h1>
+      <ListArtist artists={artists} />
     </div>
   );
 }
