@@ -5,6 +5,7 @@ import "./LeftMenu.scss";
 import { BasicModal } from "../../Shared";
 import { NewArtistForm } from "../../Artist";
 import { AddAlbumForm } from "../../Albums/AddAlbumForm";
+import { AddSongForm } from "../../Song/AddSongForm/AddSongForm";
 
 export function LeftMenu() {
   const { pathname } = useLocation();
@@ -33,7 +34,7 @@ export function LeftMenu() {
     }
     if (type === "songs") {
       setTitleModal("Nueva cancion");
-      setContentModal(<p>formulario nueva cancion</p>);
+      setContentModal(<AddSongForm onClose={closeModal} />);
     }
 
     setShowModal(true);
