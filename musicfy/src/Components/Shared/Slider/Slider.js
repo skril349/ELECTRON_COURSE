@@ -11,6 +11,7 @@ const settings = {
   slidesToShow: 2,
   swipeToSlide: true,
   centerMode: true,
+  adaptiveHeight: true,
 };
 
 export function Slider(props) {

@@ -72,6 +72,7 @@ export function Artist() {
       </div>
       <div className="artist-page__slider">
         <h2>canciones</h2>
+        <Slider data={songs} />
       </div>
     </div>
   );
