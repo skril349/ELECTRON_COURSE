@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Form, Icon } from "semantic-ui-react";
 import { useFormik } from "formik";
 import "./AddSongForm.scss";
 import classNames from "classnames";
 import { initialValues, validationSchema } from "./AddSongForm.data";
+import { useDropzone } from "react-dropzone";
 
 export function AddSongForm(props) {
   const { onClose } = props;
@@ -17,6 +18,16 @@ export function AddSongForm(props) {
       console.log(formValue);
     },
   });
+
+  const onDrop = useCallback(() => async (acceptedFile) => {
+    const file = acceptedFile[0];
+    setSongName(file.name);
+    formik.setFieldValue("file", file);
+    formik.setFieldValue("name", file.name);
+    console.log(file);
+  });
+
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
     <Form className="add-song-form" onSubmit={formik.handleSubmit}>
@@ -35,11 +46,12 @@ export function AddSongForm(props) {
         options={[]}
       />
       <div
+        {...getRootProps()}
         className={classNames("add-song-form__file", {
-          error: false,
+          error: formik.errors.file,
         })}
       >
-        {/* <input/> */}
+        <input {...getInputProps()} />
         <Icon name="cloud upload" />
         <div>
           <p>
