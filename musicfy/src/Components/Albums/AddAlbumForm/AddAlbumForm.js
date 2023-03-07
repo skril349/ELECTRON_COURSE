@@ -6,11 +6,13 @@ import { useFormik } from "formik";
 import { initialValues, validationSchema } from "./AddAlbumForm.data";
 import { useDropzone } from "react-dropzone";
 import { noImage } from "../../../assets";
-import { Artist } from "../../../api";
+import { Artist, Album, Storage } from "../../../api";
 import { map } from "lodash";
+import { v4 as uuidv4 } from "uuid";
 
 const artistController = new Artist();
-
+const albumController = new Album();
+const storageController = new Storage();
 export function AddAlbumForm(props) {
   const { onClose } = props;
   const [artistsOptions, setArtistsOptions] = useState([]);
@@ -46,7 +48,21 @@ export function AddAlbumForm(props) {
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
-      console.log(formValue);
+      try {
+        const { name, image, artist } = formValue;
+        const response = await storageController.uploadFile(
+          image,
+          "album",
+          uuidv4()
+        );
+        const url = await storageController.getUrlFile(
+          response.metadata.fullPath
+        );
+        await albumController.create(name, url, artist);
+        onClose();
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
   return (
