@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { Form, Image } from "semantic-ui-react";
 import "./AddAlbumForm.scss";
 import classNames from "classnames";
 import { useFormik } from "formik";
 import { initialValues, validationSchema } from "./AddAlbumForm.data";
-import { async } from "@firebase/util";
+import { useDropzone } from "react-dropzone";
+import { noImage } from "../../../assets";
 
 export function AddAlbumForm(props) {
   const { onClose } = props;
+
+  const [image, setImage] = useState(noImage);
+  const onDrop = useCallback(async (acceptedFile) => {
+    const file = acceptedFile[0];
+    setImage(URL.createObjectURL(file));
+    formik.setFieldValue("image", file);
+    console.log(file);
+  });
+
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   const formik = useFormik({
     initialValues: initialValues(),
@@ -21,11 +32,13 @@ export function AddAlbumForm(props) {
     <Form className="add-album-form" onSubmit={formik.handleSubmit}>
       <div className="add-album-form__content">
         <div
+          {...getRootProps()}
           className={classNames("add-album-form__content-image", {
-            error: false,
+            error: formik.errors.image,
           })}
         >
-          <Image src={null} className={classNames({ full: null })} />
+          <input {...getInputProps()} />
+          <Image src={image} />
         </div>
         <div className="add-album-form__content-inputs">
           <Form.Input
