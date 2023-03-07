@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Artist as ArtistController, Album } from "../../api";
+import { Artist as ArtistController, Album, Song } from "../../api";
 import { useParams } from "react-router-dom";
 import "./Artist.scss";
 import { ArtistBanner } from "../../Components/Artist";
 import { Slider } from "../../Components";
+import { map } from "lodash";
 
 const artistController = new ArtistController();
 const albumController = new Album();
+const songController = new Song();
 
 export function Artist() {
   const { id } = useParams();
 
   const [artist, setArtist] = useState(null);
   const [albums, setAlbums] = useState(null);
+  const [songs, setSongs] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -36,6 +39,27 @@ export function Artist() {
       }
     })();
   }, [id]);
+
+  useEffect(() => {
+    if (albums) {
+      (async () => {
+        try {
+          let data = [];
+          for await (const item of albums) {
+            const result = await songController.obtainAllByAlbum(item.id);
+            const dataTemp = map(result, (dataSong) => ({
+              ...dataSong,
+              image: item.image,
+            }));
+            data.push(...dataTemp);
+            setSongs(data);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
+  }, [albums]);
 
   if (!artist) return null;
 

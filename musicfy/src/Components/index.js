@@ -4,3 +4,4 @@ export * from "./RegisterForm";
 export * from "./Shared";
 export * from "./Profile";
 export * from "./Albums";
+export * from "./Song";

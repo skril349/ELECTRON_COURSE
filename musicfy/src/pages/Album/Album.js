@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import "./Album.scss";
 import { AlbumInfo } from "../../Components/Albums/AlbumInfo/AlbumInfo";
+import { ListSongs } from "../../Components";
 
 const albumController = new AlbumController();
 const songController = new Song();
@@ -47,6 +48,7 @@ export function Album() {
   return (
     <div className="album-page">
       <AlbumInfo album={album} />
+      <ListSongs songs={songs} miniature={album.image} />
     </div>
   );
 }
