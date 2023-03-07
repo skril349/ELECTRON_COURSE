@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
 import "./LeftMenu.scss";
 import { BasicModal } from "../../Shared";
+import { NewArtistForm } from "../../Artist";
 
 export function LeftMenu() {
   const { pathname } = useLocation();
@@ -23,7 +24,7 @@ export function LeftMenu() {
   const openModal = (type) => {
     if (type === "artists") {
       setTitleModal("Nuevo Artista");
-      setContentModal(<p>formulario nuevo artista</p>);
+      setContentModal(<NewArtistForm onClose={closeModal} />);
     }
     if (type === "albums") {
       setTitleModal("Nuevo album");
