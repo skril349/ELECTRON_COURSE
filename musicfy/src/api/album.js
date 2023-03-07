@@ -1,5 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
-import { setDoc, doc, collection, getDocs, getDoc } from "firebase/firestore";
+import {
+  setDoc,
+  doc,
+  collection,
+  getDocs,
+  getDoc,
+  where,
+  query,
+} from "firebase/firestore";
 import { db } from "../utils";
 import { map } from "lodash";
 
@@ -35,6 +43,18 @@ export class Album {
       const docRef = doc(db, this.collectionName, id);
       const snapshot = await getDoc(docRef);
       return snapshot.data();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getAlbumsByArtist(idArtist) {
+    try {
+      const whereRef = where("artist", "==", idArtist);
+      const collectionRef = collection(db, this.collectionName);
+      const queryRef = query(collectionRef, whereRef);
+      const snapshot = await getDocs(queryRef);
+      return map(snapshot.docs, (doc) => doc.data());
     } catch (error) {
       throw error;
     }

@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Artist as ArtistController } from "../../api";
+import { Artist as ArtistController, Album } from "../../api";
 import { useParams } from "react-router-dom";
 import "./Artist.scss";
 import { ArtistBanner } from "../../Components/Artist";
 
 const artistController = new ArtistController();
+const albumController = new Album();
 
 export function Artist() {
   const { id } = useParams();
+
+  const [artist, setArtist] = useState(null);
+  const [albums, setAlbums] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -20,7 +24,17 @@ export function Artist() {
     })();
   }, [id]);
 
-  const [artist, setArtist] = useState(null);
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await albumController.getAlbumsByArtist(id);
+        console.log(response);
+        setAlbums(response);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [id]);
 
   if (!artist) return null;
 
