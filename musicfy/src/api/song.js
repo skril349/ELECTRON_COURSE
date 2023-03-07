@@ -8,6 +8,7 @@ import {
   where,
   query,
 } from "firebase/firestore";
+import { map } from "lodash";
 import { db } from "../utils";
 
 export class Song {
@@ -20,6 +21,18 @@ export class Song {
       const data = { id, name, album, file, created_at };
       const docRef = doc(db, this.collectionName, id);
       await setDoc(docRef, data);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async obtainAllByAlbum(idAlbum) {
+    try {
+      const whereRef = where("album", "==", idAlbum);
+      const collectionRef = collection(db, this.collectionName);
+      const queryRef = query(collectionRef, whereRef);
+      const snapshot = await getDocs(queryRef);
+      return map(snapshot.docs, (doc) => doc.data());
     } catch (error) {
       throw error;
     }

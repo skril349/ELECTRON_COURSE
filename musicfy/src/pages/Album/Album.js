@@ -1,14 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { Album as AlbumController } from "../../api";
+import { Album as AlbumController, Song } from "../../api";
 import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import "./Album.scss";
 import { AlbumInfo } from "../../Components/Albums/AlbumInfo/AlbumInfo";
 
 const albumController = new AlbumController();
+const songController = new Song();
+
 export function Album() {
   const { id } = useParams();
   const [album, setAlbum] = useState(null);
+  const [songs, setSongs] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await songController.obtainAllByAlbum(id);
+        setSongs(response);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [id]);
 
   useEffect(() => {
     (async () => {
