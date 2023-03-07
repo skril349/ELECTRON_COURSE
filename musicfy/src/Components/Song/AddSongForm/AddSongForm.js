@@ -5,10 +5,32 @@ import "./AddSongForm.scss";
 import classNames from "classnames";
 import { initialValues, validationSchema } from "./AddSongForm.data";
 import { useDropzone } from "react-dropzone";
+import { Album } from "../../../api";
+import { map } from "lodash";
+
+const albumController = new Album();
 
 export function AddSongForm(props) {
   const { onClose } = props;
   const [songName, setSongName] = useState(null);
+  const [albumsOptions, setAlbumbsOptions] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await albumController.obtainAll();
+        const result = map(response, (item) => ({
+          key: item.id,
+          value: item.id,
+          text: item.name,
+        }));
+
+        setAlbumbsOptions(result);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   const formik = useFormik({
     initialValues: initialValues(),
@@ -43,7 +65,10 @@ export function AddSongForm(props) {
         fluid
         search
         selection
-        options={[]}
+        options={albumsOptions}
+        value={formik.values.album}
+        onChange={(_, data) => formik.setFieldValue("album", data.value)}
+        error={formik.errors.album}
       />
       <div
         {...getRootProps()}
