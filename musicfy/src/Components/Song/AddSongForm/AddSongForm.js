@@ -5,10 +5,13 @@ import "./AddSongForm.scss";
 import classNames from "classnames";
 import { initialValues, validationSchema } from "./AddSongForm.data";
 import { useDropzone } from "react-dropzone";
-import { Album } from "../../../api";
+import { Album, Storage, Song } from "../../../api";
 import { map } from "lodash";
+import { v4 as uuidv4 } from "uuid";
 
 const albumController = new Album();
+const storageController = new Storage();
+const songController = new Song();
 
 export function AddSongForm(props) {
   const { onClose } = props;
@@ -37,12 +40,28 @@ export function AddSongForm(props) {
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
-      console.log(formValue);
+      try {
+        const { file, name, album } = formValue;
+        const response = await storageController.uploadFile(
+          file,
+          "song",
+          uuidv4()
+        );
+        const url = await storageController.getUrlFile(
+          response.metadata.fullPath
+        );
+
+        await songController.create(name, album, url);
+        onClose();
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
-  const onDrop = useCallback(() => async (acceptedFile) => {
+  const onDrop = useCallback(async (acceptedFile) => {
     const file = acceptedFile[0];
+    console.log(file);
     setSongName(file.name);
     formik.setFieldValue("file", file);
     formik.setFieldValue("name", file.name);
