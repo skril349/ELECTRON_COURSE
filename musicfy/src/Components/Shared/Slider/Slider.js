@@ -15,10 +15,25 @@ const settings = {
 };
 
 export function Slider(props) {
-  const { data, basePath } = props;
+  const { data, basePath, song } = props;
   return (
     <Slick {...settings} className="slider">
       {map(data, (item) => {
+        if (song) {
+          return (
+            <div
+              key={item.id}
+              className="slider__item"
+              onClick={() => console.log("reproducir")}
+            >
+              <div className="slider__item-block-play">
+                <Image src={item.image} alt={item.name} />
+                <Icon name="play circle outline" />
+              </div>
+              <h3>{item.name}</h3>
+            </div>
+          );
+        }
         return (
           <Link
             to={`/${basePath}/${item.id}`}

@@ -68,11 +68,11 @@ export function Artist() {
       <ArtistBanner image={artist.image} name={artist.name} />
       <div className="artist-page__slider">
         <h2>Albumes</h2>
-        <Slider data={albums} basePath="albums" />
+        <Slider data={albums} basePath="albums" song={false} />
       </div>
       <div className="artist-page__slider">
         <h2>canciones</h2>
-        <Slider data={songs} />
+        <Slider data={songs} song={true} />
       </div>
     </div>
   );
