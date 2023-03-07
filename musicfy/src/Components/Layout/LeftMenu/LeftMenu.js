@@ -4,6 +4,7 @@ import { Menu } from "semantic-ui-react";
 import "./LeftMenu.scss";
 import { BasicModal } from "../../Shared";
 import { NewArtistForm } from "../../Artist";
+import { AddAlbumForm } from "../../Albums/AddAlbumForm";
 
 export function LeftMenu() {
   const { pathname } = useLocation();
@@ -28,7 +29,7 @@ export function LeftMenu() {
     }
     if (type === "albums") {
       setTitleModal("Nuevo album");
-      setContentModal(<p>formulario nuevo album</p>);
+      setContentModal(<AddAlbumForm onClose={closeModal} />);
     }
     if (type === "songs") {
       setTitleModal("Nueva cancion");
