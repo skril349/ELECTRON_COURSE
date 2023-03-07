@@ -3,6 +3,7 @@ import { Artist as ArtistController, Album } from "../../api";
 import { useParams } from "react-router-dom";
 import "./Artist.scss";
 import { ArtistBanner } from "../../Components/Artist";
+import { Slider } from "../../Components";
 
 const artistController = new ArtistController();
 const albumController = new Album();
@@ -43,6 +44,7 @@ export function Artist() {
       <ArtistBanner image={artist.image} name={artist.name} />
       <div className="artist-page__slider">
         <h2>Albumes</h2>
+        <Slider data={albums} basePath="albums" />
       </div>
       <div className="artist-page__slider">
         <h2>canciones</h2>
