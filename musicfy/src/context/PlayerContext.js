@@ -24,6 +24,7 @@ export function PlayerProvider(props) {
     playSong,
     pause,
     resume,
+    setVolume,
     song,
     miniature,
     playing,

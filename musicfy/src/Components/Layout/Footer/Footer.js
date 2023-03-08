@@ -5,7 +5,7 @@ import { Player } from "../../Shared/Player";
 import { usePlayer } from "../../../hooks";
 
 export function Footer() {
-  const { miniature, song } = usePlayer();
+  const { miniature, volume, song, setVolume } = usePlayer();
   return (
     <div className="footer">
       <div className="footer__left">
@@ -22,6 +22,8 @@ export function Footer() {
           min={0}
           max={1}
           step={0.01}
+          value={volume}
+          onChange={(_, data) => setVolume(Number(data.value))}
         />
       </div>
     </div>
