@@ -8,7 +8,7 @@ import "./Slider.scss";
 const settings = {
   dots: false,
   infinite: true,
-  slidesToShow: 2,
+  slidesToShow: 3,
   swipeToSlide: true,
   centerMode: true,
   adaptiveHeight: true,
@@ -16,6 +16,16 @@ const settings = {
 
 export function Slider(props) {
   const { data, basePath, song } = props;
+  const [size, setSize] = useState(0);
+  const itemRef = useRef();
+
+  useEffect(() => {
+    if (itemRef.current) {
+      console.log(itemRef.current.clientWidth);
+      setSize(itemRef.current.clientWidth);
+    }
+  }, []);
+
   return (
     <Slick {...settings} className="slider">
       {map(data, (item) => {
@@ -25,9 +35,14 @@ export function Slider(props) {
               key={item.id}
               className="slider__item"
               onClick={() => console.log("reproducir")}
+              ref={itemRef}
             >
               <div className="slider__item-block-play">
-                <Image src={item.image} alt={item.name} />
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  style={{ height: size }}
+                />
                 <Icon name="play circle outline" />
               </div>
               <h3>{item.name}</h3>
@@ -39,8 +54,9 @@ export function Slider(props) {
             to={`/${basePath}/${item.id}`}
             key={item.id}
             className="slider__item"
+            ref={itemRef}
           >
-            <Image src={item.image} alt={item.name} />
+            <Image src={item.image} alt={item.name} style={{ height: size }} />
             <h3>{item.name}</h3>
           </Link>
         );
