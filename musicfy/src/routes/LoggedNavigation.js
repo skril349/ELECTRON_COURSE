@@ -1,11 +1,11 @@
 import React from "react";
 import { Button } from "semantic-ui-react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { Home, Artists, Artist, Albums, Album, Profile } from "../pages";
 import { LoggedLayout } from "../layouts/LoggedLayout/LoggedLayout";
 export function LoggedNavigation() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <LoggedLayout>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -16,6 +16,6 @@ export function LoggedNavigation() {
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </LoggedLayout>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
