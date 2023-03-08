@@ -3,6 +3,7 @@ import { Artist, Album, Song } from "../../api";
 import "./Home.scss";
 import { bannerHome } from "../../assets";
 import { Slider } from "../../Components/Shared";
+import { usePlayer } from "../../hooks";
 
 const artistController = new Artist();
 const albumController = new Album();
