@@ -28,7 +28,7 @@ export function Home() {
 
       <div className="home-page__slider">
         <h2>ultimos artistas</h2>
-        {artists && <Slider data={artists} basPath="artists" song={false} />}
+        {artists && <Slider data={artists} basePath="artists" song={false} />}
       </div>
       <div className="home-page__slider">
         <h2>ultimos allbumes</h2>

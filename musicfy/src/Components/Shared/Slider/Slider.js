@@ -17,6 +17,7 @@ const settings = {
 export function Slider(props) {
   const { data, basePath, song } = props;
   const [size, setSize] = useState(0);
+  const [loadCompleted, setLoadCompleted] = useState(false);
   const itemRef = useRef();
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export function Slider(props) {
       console.log(itemRef.current.clientWidth);
       setSize(itemRef.current.clientWidth);
     }
-  }, []);
+  }, [loadCompleted]);
 
   return (
     <Slick {...settings} className="slider">
@@ -36,6 +37,7 @@ export function Slider(props) {
               className="slider__item"
               onClick={() => console.log("reproducir")}
               ref={itemRef}
+              onLoad={() => setLoadCompleted(true)}
             >
               <div className="slider__item-block-play">
                 <Image
@@ -55,6 +57,7 @@ export function Slider(props) {
             key={item.id}
             className="slider__item"
             ref={itemRef}
+            onLoad={() => setLoadCompleted(true)}
           >
             <Image src={item.image} alt={item.name} style={{ height: size }} />
             <h3>{item.name}</h3>
