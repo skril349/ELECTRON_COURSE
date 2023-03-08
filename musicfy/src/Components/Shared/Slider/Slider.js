@@ -4,6 +4,7 @@ import Slick from "react-slick";
 import { map } from "lodash";
 import { Link } from "react-router-dom";
 import "./Slider.scss";
+import { usePlayer } from "../../../hooks";
 
 const settings = {
   dots: false,
@@ -19,6 +20,7 @@ export function Slider(props) {
   const [size, setSize] = useState(0);
   const [loadCompleted, setLoadCompleted] = useState(false);
   const itemRef = useRef();
+  const { playSong } = usePlayer();
 
   useEffect(() => {
     if (itemRef.current) {
@@ -35,7 +37,7 @@ export function Slider(props) {
             <div
               key={item.id}
               className="slider__item"
-              onClick={() => console.log("reproducir")}
+              onClick={() => playSong(item, item.image)}
               ref={itemRef}
               onLoad={() => setLoadCompleted(true)}
             >

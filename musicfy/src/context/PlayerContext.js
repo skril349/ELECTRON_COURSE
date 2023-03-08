@@ -8,8 +8,10 @@ export function PlayerProvider(props) {
   const [playing, setPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
 
-  const playSong = () => {
+  const playSong = (songData, miniatureData) => {
     //reproducir canciones
+    setSong(songData);
+    setMiniature(miniatureData);
   };
   const pause = () => {
     setPlaying(false);
