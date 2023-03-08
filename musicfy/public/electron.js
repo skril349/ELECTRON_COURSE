@@ -12,6 +12,8 @@ function createWindow() {
     width: 1500,
     height: 1000,
     title: "Musicfy",
+    titleBarStyle: "hidden",
+    //kiosk: true, --> pantalla completa, solo muestra ésta app
     // titleBarStyle: "hiddenInset",
     // resizable: false,
   });
