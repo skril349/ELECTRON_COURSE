@@ -12,6 +12,7 @@ export function PlayerProvider(props) {
     //reproducir canciones
     setSong(songData);
     setMiniature(miniatureData);
+    setPlaying(true);
   };
   const pause = () => {
     setPlaying(false);
